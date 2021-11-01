@@ -36,3 +36,55 @@ JOIN movies
 ON ratings.movie_id = movies.id
 WHERE movies.year = 2012;
 
+
+--In 7.sql, write a SQL query to list all movies released in 2010 and their ratings, in descending order by rating. For movies with the same rating, order them alphabetically by title.
+--Your query should output a table with two columns, one for the title of each movie and one for the rating of each movie.
+--Movies that do not have ratings should not be included in the result.
+
+
+--Executing 7.sql results in a table with 2 columns and 6,864 rows.
+SELECT title, rating FROM ratings
+JOIN movies
+ON ratings.movie_id = movies.id
+WHERE movies.title = title AND movies.year = 2010
+ORDER BY rating DESC, title ASC;
+
+--In 8.sql, write a SQL query to list the names of all people who starred in Toy Story.
+--Your query should output a table with a single column for the name of each person.
+--You may assume that there is only one movie in the database with the title Toy Story.
+
+--Executing 8.sql results in a table with 1 column and 4 rows.
+
+SELECT name from people
+JOIN stars ON people.id = stars.person_id
+JOIN movies ON stars.movie_id = movies.id
+WHERE movies.title = "Toy Story";
+
+--In 9.sql, write a SQL query to list the names of all people who starred in a movie released in 2004, ordered by birth year.
+--Your query should output a table with a single column for the name of each person.
+--People with the same birth year may be listed in any order.
+--No need to worry about people who have no birth year listed, so long as those who do have a birth year are listed in order.
+--If a person appeared in more than one movie in 2004, they should only appear in your results once.
+
+--Executing 9.sql results in a table with 1 column and 18,237 rows.
+
+SELECT DISTINCT(people.name) from stars
+JOIN people ON stars.person_id = people.id
+JOIN movies ON stars.movie_id = movies.id
+WHERE movies.year = 2004
+ORDER BY birth;
+
+
+--In 10.sql, write a SQL query to list the names of all people who have directed a movie that received a rating of at least 9.0.
+--Your query should output a table with a single column for the name of each person.
+--If a person directed more than one movie that received a rating of at least 9.0, they should only appear in your results once.
+
+
+SELECT name from people
+JOIN directors ON people.id = directors.person_id
+JOIN movies ON directors.movie_id = movies.id
+JOIN ratings on movies.id = ratings.movie_id
+WHERE rating >= 9;
+
+
+
